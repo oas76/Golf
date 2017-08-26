@@ -4,7 +4,7 @@ import itertools as i
 import random as ran
 import numpy as np
 import functools as func
-
+import Config as C
 
 
 def _cleanTeamCobinations(list):
@@ -18,6 +18,35 @@ def _isUniqueTupple(tupple):
     a = tupple[0][0]
     b = tupple[0][1]
     return a not in tupple[1] and b not in tupple[1]
+
+def _randomTeamCombination(iterable,nrPlayers,nrOfTeams=2):
+    final = ()
+
+    while len(final) < nrPlayers / 2 * 2:
+        try:
+            pool = tuple(iterable)
+            n = len(pool)
+            indices = sorted(ran.sample(xrange(n), nrOfTeams))
+            final = func.reduce(lambda x, y: set(x) | set(y), tuple(pool[i] for i in indices))
+        except ValueError:
+            print 'e'
+            pass
+
+    return tuple(pool[i] for i in indices)
+
+def _setOfPossibleTeams(listOfTeams):
+    i = 0
+    round_setup = []
+
+    while i < 1000:
+        res = _randomTeamCombination(listOfTeams,len(C.players),nrOfTeams=C.nrOfTeams)
+        round_setup.append(res)
+        i = i+1
+
+    return set(round_setup)
+
+def _getRandomRounds(setOfRounds, nrOfRounds):
+    return ran.sample(setOfRounds,nrOfRounds)
 
 def _doFormatCheck1(list):
     # for entries 1,3,5 and 8, ( Round 2, Round4, Round6 and Round9) there must be a new team with the "paused" participant
@@ -111,7 +140,7 @@ def _addTeamHandicap(tournament):
 def _getHandicapForPlayers(players):
     hc = []
     for p in players:
-        hc += map(lambda x : x['hc'], filter(lambda x: x['Name'] == p, player_list))
+        hc += map(lambda x : x['hc'], filter(lambda x: x['Name'] == p, C.players))
     return _calcTeamHc(hc)
 
 def _calcTeamHc(hclist):
@@ -195,11 +224,7 @@ def _doFlightSetup(tournament,tournament_flights):
 
 
 # Define player details, Name and handicap
-player_list  = [{'Name':'Andy', 'hc': 20.2 },
-                {'Name':'Jorgen', 'hc': 23.5},
-                {'Name':'Poggen', 'hc': 10.4},
-                {'Name':'Oddis', 'hc': 13.0},
-                {'Name':'Smu', 'hc': 16.8 }]
+player_list  = C.players
 
 # Get player names only
 player_names = [ entry['Name'] for entry in player_list ]
@@ -208,17 +233,23 @@ player_names = [ entry['Name'] for entry in player_list ]
 random_player_list = np.random.permutation(player_names)
 
 # Find possible teams, and represent it in a number
-teams_list = i.combinations(random_player_list,2)
+teams_list = i.combinations(random_player_list,C.teamsize)
+t_list = list(teams_list)
 
-# Find all combinations of 2 teams
-team_combinations = i.combinations(teams_list,2)
+# Find set of random team combination
+possible_rounds = _setOfPossibleTeams(t_list)
 
-# Filter all combination to avoid duplicats of players in team combinations
-clean_combinations = _cleanTeamCobinations(team_combinations)
+tournament = _getRandomRounds(possible_rounds,C.nrOfRounds)
 
-# Find how many combinations to have 10 rounds with the teams
-tournament_combinations = i.combinations(clean_combinations,10)
+for t_round in tournament:
+    print t_round
+    i = 1
+    for players in t_round:
+        print 'Handicap Team %d : %.1f' % (i,_getHandicapForPlayers(players))
+        i = i+1
 
+
+'''
 # check that each team is exactly present twice and return the set of valid tournaments
 valid_tournaments = []
 
@@ -292,7 +323,7 @@ with open('./RoundSetup.txt','wt') as list:
 
         list.write('\n\n')
 
-
+'''
 
 
 

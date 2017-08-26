@@ -1,0 +1,8 @@
+# Created by .ignore support plugin (hsz.mobi)
+.gitignore
+.idea/Golf.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/workspace.xml
+GolfSetup/GolfSetup.egg-info/
+GolfSetup/RoundSetup.txt
