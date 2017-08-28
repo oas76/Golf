@@ -1,0 +1,6 @@
+WebApp.egg-info/PKG-INFO
+WebApp.egg-info/SOURCES.txt
+WebApp.egg-info/dependency_links.txt
+WebApp.egg-info/not-zip-safe
+WebApp.egg-info/requires.txt
+WebApp.egg-info/top_level.txt
