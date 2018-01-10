@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Team Randomizer</title>
+
+
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    <link href="../static/setup.css" rel="stylesheet">
+    <script src="../static/js/jQuery.js"></script>
+    <script src="../static/js/randomize.js"></script>
+
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div>
+          <p></p>
+          <p></p>
+      </div>
+
+      <div class="jumbotron">
+        <h1>Randomizer App</h1>
+        {% for p in players %}
+            <div>
+                <p>
+                {% for key, val in p.iteritems() %}
+                    {{ val }}
+                {% endfor %}
+                </p>
+            </div>
+        {% endfor %}
+        <form class="form-signin">
+        <label for="numberOfTeams" class="sr-only">Number of Teams</label>
+        <input type="number" name="numberOfTeams" id="numberOfTeams" class="form-control" placeholder="Number Of Teams" required autofocus>
+        <button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="button">Randomize</button>
+      </form>
+      </div>
+
+
+
+      <footer class="footer">
+        <p>&copy; Raymon Tour Inc. 2015</p>
+      </footer>
+
+    </div>
+  </body>
+</html>

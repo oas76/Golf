@@ -11,7 +11,7 @@ players =   [
 
 teamsize = 3
 nrOfTeams = 2
-nrOfRounds = 3
+nrOfRounds = 1
 
 course_par = 72
 course_slope = 113

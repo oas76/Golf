@@ -1,0 +1,6 @@
+GolfSetup.egg-info/PKG-INFO
+GolfSetup.egg-info/SOURCES.txt
+GolfSetup.egg-info/dependency_links.txt
+GolfSetup.egg-info/not-zip-safe
+GolfSetup.egg-info/requires.txt
+GolfSetup.egg-info/top_level.txt

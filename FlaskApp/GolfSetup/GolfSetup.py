@@ -220,7 +220,7 @@ def _doFlightSetup(tournament,tournament_flights):
 ################################################################################
 
 
-def main():
+def main(size=C.teamsize):
 
 
     # Define player details, Name and handicap
@@ -233,7 +233,7 @@ def main():
     random_player_list = np.random.permutation(player_names)
 
     # Find possible teams, and represent it in a number
-    teams_list = itertools.combinations(random_player_list,C.teamsize)
+    teams_list = itertools.combinations(random_player_list,size)
     t_list = list(teams_list)
 
     # Find set of random team combination
@@ -241,12 +241,15 @@ def main():
 
     tournament = _getRandomRounds(possible_rounds,C.nrOfRounds)
 
+    '''
     for t_round in tournament:
         print t_round
         i = 1
         for players in t_round:
             print 'Handicap Team %d : %.1f' % (i,_getHandicapForPlayers(players))
             i = i+1
+    '''
+    return tournament
 
 
 if __name__ == "__main__":
