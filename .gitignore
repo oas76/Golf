@@ -7,3 +7,4 @@
 GolfSetup/GolfSetup.egg-info/
 GolfSetup/RoundSetup.txt
 .idea/*
+*.pyc
