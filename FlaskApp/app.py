@@ -12,18 +12,17 @@ def main():
 def showRandomize():
     return render_template('randomize.html', players = Config.players)
 
-@app.route("/randomize", methods=['POST'])
+@app.route("/randomize", methods=['POST','GET'])
 def randomize():
     try:
-         # read input fields
-        _nrOfteams = int(request.form['numberOfTeams'])
-
         # validate the received values
-        if _nrOfteams:
-            _res = GolfSetup.main(size=_nrOfteams)
-            return render_template('result.html',result = _res)
-        else:
-            return json.dumps({'html': '<span>Enter the required fields</span>'})
+        if request.method == 'POST':
+            # read input fields
+            _nrOfteams = int(request.form['numberOfTeams'])
+            if _nrOfteams:
+                _res = GolfSetup.main(size=_nrOfteams)
+                return render_template('result.html', result = _res)
+
     except Exception as e:
         return json.dumps({'error': str(e)})
 
