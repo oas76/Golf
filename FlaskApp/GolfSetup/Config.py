@@ -9,12 +9,5 @@ players =   [
     {'Name':'Bjorn', 'hc': 13.3 },
 ]
 
-teamsize = 3
-nrOfTeams = 2
-nrOfRounds = 1
-
-course_par = 72
-course_slope = 113
-course_CR = 72
-
+teamsize = 4
 
