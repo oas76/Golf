@@ -1,9 +1,9 @@
 #!/usr/local/bin/python2
 
-import itertools as i
 import random as ran
 import numpy as np
 import functools as func
+import itertools as itertools
 import Config as C
 
 
@@ -154,7 +154,6 @@ def _calcTeamHc(hclist):
     else:
         None
 
-
 def _doFlightSetup(tournament,tournament_flights):
 
     special_indexes = [0,2,4,7]
@@ -220,34 +219,38 @@ def _doFlightSetup(tournament,tournament_flights):
 
 ################################################################################
 
-# Running the script
+
+def main():
 
 
-# Define player details, Name and handicap
-player_list  = C.players
+    # Define player details, Name and handicap
+    player_list  = C.players
 
-# Get player names only
-player_names = [ entry['Name'] for entry in player_list ]
+    # Get player names only
+    player_names = [ entry['Name'] for entry in player_list ]
 
-# Randomiz order of playrs
-random_player_list = np.random.permutation(player_names)
+    # Randomiz order of playrs
+    random_player_list = np.random.permutation(player_names)
 
-# Find possible teams, and represent it in a number
-teams_list = i.combinations(random_player_list,C.teamsize)
-t_list = list(teams_list)
+    # Find possible teams, and represent it in a number
+    teams_list = itertools.combinations(random_player_list,C.teamsize)
+    t_list = list(teams_list)
 
-# Find set of random team combination
-possible_rounds = _setOfPossibleTeams(t_list)
+    # Find set of random team combination
+    possible_rounds = _setOfPossibleTeams(t_list)
 
-tournament = _getRandomRounds(possible_rounds,C.nrOfRounds)
+    tournament = _getRandomRounds(possible_rounds,C.nrOfRounds)
 
-for t_round in tournament:
-    print t_round
-    i = 1
-    for players in t_round:
-        print 'Handicap Team %d : %.1f' % (i,_getHandicapForPlayers(players))
-        i = i+1
+    for t_round in tournament:
+        print t_round
+        i = 1
+        for players in t_round:
+            print 'Handicap Team %d : %.1f' % (i,_getHandicapForPlayers(players))
+            i = i+1
 
+
+if __name__ == "__main__":
+    main()
 
 '''
 # check that each team is exactly present twice and return the set of valid tournaments
