@@ -18,4 +18,4 @@ def randomize():
         return jsonify(tournament = None)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
