@@ -9,5 +9,6 @@ players =   [
     {'Name':'Bjorn', 'hc': 13.3 },
 ]
 
-teamsize = 4
+teamsize = 2
+
 

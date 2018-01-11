@@ -21,9 +21,10 @@ def _isUniqueTupple(tupple):
 def _randomTeamCombination(iterable,nrPlayers,size):
     final = ()
 
-    while len(final) < int(nrPlayers/2)*2:
+    while len(final) < nrPlayers / size:
         try:
             pool = tuple(iterable)
+            print pool
             n = len(pool)
             indices = sorted(ran.sample(xrange(n), nrPlayers/size))
             final = func.reduce(lambda x, y: set(x) | set(y), tuple(pool[i] for i in indices))
@@ -36,14 +37,11 @@ def _randomTeamCombination(iterable,nrPlayers,size):
 def _setOfPossibleTeams(listOfTeams,size):
     i = 0
     round_setup = []
-    print listOfTeams
 
     while i < 1000:
         res = _randomTeamCombination(listOfTeams,len(C.players),size)
         round_setup.append(res)
         i = i+1
-
-    return set(round_setup)
 
 def _getRandomRounds(setOfRounds, nrOfRounds):
     return ran.sample(setOfRounds,nrOfRounds)
@@ -85,24 +83,25 @@ def createPairing(size=C.teamsize):
     teams_list = itertools.combinations(random_player_list,size)
     t_list = list(teams_list)
 
-    # Find set of random team combination
+    # Find non overlapping set of teams
     possible_pairings = _setOfPossibleTeams(t_list,size)
+    print possible_pairings
 
-    tournament = _getRandomRounds(possible_pairings,1)
-    res = []
+    #
+    #tournament = _getRandomRounds(possible_pairings,1)
+    #
+    #for t_round in tournament:
+    #    i = 1
 
-    for t_round in tournament:
-        i = 1
+    #    for players in t_round:
+    #        entry = {}
+    #        #print 'Handicap Team %d : %.1f' % (i,_getHandicapForPlayers(players))
+    #        entry['players'] = players
+    #        entry['hc'] =  round(_getHandicapForPlayers(players),1)
+    #        i = i+1
+    #        res.append(entry)
 
-        for players in t_round:
-            entry = {}
-            #print 'Handicap Team %d : %.1f' % (i,_getHandicapForPlayers(players))
-            entry['players'] = players
-            entry['hc'] =  round(_getHandicapForPlayers(players),1)
-            i = i+1
-            res.append(entry)
-
-    return res
+    return None
 
 if __name__ == "__main__":
     createPairing()
