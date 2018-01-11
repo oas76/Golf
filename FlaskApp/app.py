@@ -11,11 +11,11 @@ def main():
 @app.route("/randomize", methods=['POST'])
 def randomize():
     teamsize = int(request.form['teamsize'])
-    if 0 < teamsize < 7 :
+    if 0 < teamsize <= len(Config.players):
         res = GolfSetup.createPairing(size=teamsize)
         return jsonify(tournament = list(res))
     else:
         return jsonify(tournament = None)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)

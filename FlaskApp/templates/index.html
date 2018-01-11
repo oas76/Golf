@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Team Randomizer</title>
+    <title>Raymon Randomizer</title>
 
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -11,7 +11,7 @@
     <script>
     function loadXMLDoc()
     {
-        var req = new XMLHttpRequest()
+        var req = new XMLHttpRequest();
         req.onreadystatechange = function()
         {
             if (req.readyState == 4)
@@ -22,8 +22,14 @@
                 }
                 else
                 {
-                    var response = JSON.parse(req.responseText)
-                    document.getElementById('myDiv').innerHTML = response.tournament
+                    var response = JSON.parse(req.responseText);
+                    html = '<p id=result>';
+                    for ( index = 0; index < response.tournament.length; index++)
+                    {
+                        html = html + (index+1).toString() +  ': ' + JSON.stringify(response.tournament[index].players) + ' HC: ' + JSON.stringify(response.tournament[index].hc) + '<br>';
+                    }
+                    html = html + '</p>';
+                    document.getElementById('myDiv').innerHTML = html
                 }
             }
         }
@@ -49,16 +55,7 @@
       </div>
 
       <div class="jumbotron">
-        <h1>Randomizer App</h1>
-        {% for p in players %}
-            <div>
-                <p>
-                {% for key, val in p.iteritems() %}
-                    {{ val }}
-                {% endfor %}
-                </p>
-            </div>
-        {% endfor %}
+        <h1 align="center">Randomizer App</h1>
         <form class="form-signin" action="" method="POST">
         <label for="teamsize" class="sr-only">Team Size</label>
         <input type="number" name="teamsize" id="teamsize" class="form-control" placeholder="Team Size" required autofocus>
@@ -66,7 +63,7 @@
         </form>
       </div>
 
-      <div id="myDiv"></div>
+      <div class="jumbotron" id="myDiv"></div>
 
 
 

@@ -19,12 +19,11 @@ def _isUniqueTupple(tupple):
     return a not in tupple[1] and b not in tupple[1]
 
 def _randomTeamCombination(iterable,nrPlayers,size):
-    final = ()
+    final = []
 
-    while len(final) < nrPlayers / size:
+    while len(final) < nrPlayers - nrPlayers%size:
         try:
             pool = tuple(iterable)
-            print pool
             n = len(pool)
             indices = sorted(ran.sample(xrange(n), nrPlayers/size))
             final = func.reduce(lambda x, y: set(x) | set(y), tuple(pool[i] for i in indices))
@@ -33,18 +32,6 @@ def _randomTeamCombination(iterable,nrPlayers,size):
             pass
 
     return tuple(pool[i] for i in indices)
-
-def _setOfPossibleTeams(listOfTeams,size):
-    i = 0
-    round_setup = []
-
-    while i < 1000:
-        res = _randomTeamCombination(listOfTeams,len(C.players),size)
-        round_setup.append(res)
-        i = i+1
-
-def _getRandomRounds(setOfRounds, nrOfRounds):
-    return ran.sample(setOfRounds,nrOfRounds)
 
 def _getHandicapForPlayers(players):
     hc = []
@@ -84,24 +71,17 @@ def createPairing(size=C.teamsize):
     t_list = list(teams_list)
 
     # Find non overlapping set of teams
-    possible_pairings = _setOfPossibleTeams(t_list,size)
-    print possible_pairings
+    possible_pairings = _randomTeamCombination(t_list,len(C.players),size)
 
-    #
-    #tournament = _getRandomRounds(possible_pairings,1)
-    #
-    #for t_round in tournament:
-    #    i = 1
+    result = []
+    for pairing in possible_pairings:
+        entry = {}
+        entry['players'] = pairing
+        entry['hc'] =  _getHandicapForPlayers(pairing)
+        result.append(entry)
 
-    #    for players in t_round:
-    #        entry = {}
-    #        #print 'Handicap Team %d : %.1f' % (i,_getHandicapForPlayers(players))
-    #        entry['players'] = players
-    #        entry['hc'] =  round(_getHandicapForPlayers(players),1)
-    #        i = i+1
-    #        res.append(entry)
-
-    return None
+    print result
+    return result
 
 if __name__ == "__main__":
     createPairing()
