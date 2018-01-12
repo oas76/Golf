@@ -80,8 +80,8 @@ def createPairing(size=C.teamsize):
         entry['hc'] =  _getHandicapForPlayers(pairing)
         result.append(entry)
 
-    print result
-    return result
+    return {'pairings': result}
+
 
 if __name__ == "__main__":
     createPairing()

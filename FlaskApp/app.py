@@ -13,7 +13,7 @@ def randomize():
     teamsize = int(request.form['teamsize'])
     if 0 < teamsize <= len(Config.players):
         res = GolfSetup.createPairing(size=teamsize)
-        return jsonify(tournament = list(res))
+        return jsonify(tournament = res)
     else:
         return jsonify(tournament = None)
 
