@@ -8,6 +8,8 @@
     <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
     <link href="../static/setup.css" rel="stylesheet">
 
+    <script type="text/javascript" src="../static/js/disablekey.js"></script>
+
 
   </head>
 
@@ -15,6 +17,8 @@
 
     <script type="text/javascript" src="../static/js/mustache.js" ></script>
     <script type="text/javascript" src="../static/js/randomize.js"></script>
+
+
 
     <div class="container">
       <div>
@@ -24,7 +28,7 @@
 
       <div class="jumbotron">
         <h1 align="center">Randomizer App</h1>
-        <form class="form-signin" action="" method="POST">
+        <form class="form-signin" id="inputform" method="POST">
         <label for="teamsize" class="sr-only">Team Size</label>
         <input type="number" name="teamsize" id="teamsize" class="form-control" placeholder="Team Size" required autofocus>
         <button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="button" onclick="return loadXMLDoc()">Randomize</button>

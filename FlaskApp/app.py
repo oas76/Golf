@@ -4,7 +4,7 @@ from GolfSetup import Config
 
 app = Flask(__name__)
 
-@app.route("/")
+@app.route("/",methods=['GET','POST'])
 def main():
     return render_template('index.html', players=Config.players)
 
