@@ -1,6 +1,7 @@
 from flask import Flask, render_template, json, request, jsonify
 from GolfSetup import GolfSetup
 from GolfSetup import Config
+from GolfSetup import Players
 
 app = Flask(__name__)
 
@@ -19,16 +20,20 @@ def randomize():
 
 @app.route("/players",methods=['GET'])
 def players():
-    return render_template('players.html', players=Config.players)
+    return render_template('players.html', players=(Players.getPlayers('./data/Players.json')['Players']))
 
 @app.route("/editplayer",methods=['GET','POST'])
 def editplayers():
     #player_index = int(request.form['playerindex'])
     return render_template('editplayer.html')
 
-@app.route("/deleteplayer",methods=['POST'])
+@app.route("/deleteplayer",methods=['GET','POST'])
 def deleteplayers():
-    return False
+    pid = request.args['pid']
+    print 'Deleting pid: %d' % int(pid)
+    if pid:
+        Players.deletePlayer('./data/Players.json',int(pid))
+    return render_template('players.html', players=(Players.getPlayers('./data/Players.json')['Players']))
 
 @app.route("/saveplayer",methods=['POST'])
 def saveplayers():
