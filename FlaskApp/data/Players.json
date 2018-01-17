@@ -1,0 +1,10 @@
+{"Players":
+  [
+    {"pid":1, "Name": "Oddis", "hc": 14.3},
+    {"pid":2, "Name": "SMU", "hc": 16.8},
+    {"pid":3, "Name": "Andy", "hc": 20.2},
+    {"pid":4, "Name": "Poggen", "hc": 10.4},
+    {"pid":5, "Name": "Jry", "hc": 23.5},
+    {"pid":6, "Name": "Bjorn", "hc": 13.3},
+  ]
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Raymon Randomizer</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <link href="../static/setup.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <script type="text/javascript" src="../static/js/saveplayer.js"></script>
+
+    <div class="container">
+      <div>
+          <p></p>
+          <p></p>
+      </div>
+
+      <div class="jumbotron">
+        <h2 align="center">Raymon Players</h2>
+        <form class="form-signin" id="editplayer" method="POST">
+        <table class="table">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Handicap</th>
+              <th scope="col" align="right"></th>
+              <th scope="col" align="right"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+
+              <td><input type="text" placeholder="Name" id="newname"/></td>
+              <td><input type="number" placeholder="Handicap" id="newhandicap"/></td>
+
+            </tr>
+          </tbody>
+        </table>
+
+         <p>
+          <button onclick="return saveplayer()" class="btn btn-info btn-lg">
+            <span class="glyphicon glyphicon-save"></span> Save
+          </button>
+         </p>
+
+
+        </form>
+
+
+      </div>
+
+      <footer class="footer">
+        <p>&copy; Raymon Tour Inc. 2015</p>
+      </footer>
+
+    </div>
+  </body>
