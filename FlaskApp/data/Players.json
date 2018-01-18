@@ -1,14 +1,3 @@
 {
-    "Players":[
-        {
-            "Name":"Andy",
-            "hc":20.2,
-            "pid":3
-        },
-        {
-            "Name":"Jry",
-            "hc":23.5,
-            "pid":5
-        }
-    ]
+    "Players":[]
 }

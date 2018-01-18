@@ -30,7 +30,7 @@
         <h2 align="center">Randomizer App</h2>
         <form class="form-signin" id="inputform" method="POST">
         <label for="teamsize" class="sr-only">Team Size</label>
-        <input type="number" name="teamsize" id="teamsize" class="form-control" placeholder="Team Size" required autofocus>
+        <input type="text" align="center" pattern="[0-9.]" maxlength="1" name="teamsize" id="teamsize" class="form-control" placeholder="Team Size" required autofocus>
         <button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="button" onclick="return loadXMLDoc()">Randomize</button>
         </form>
       </div>

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, json, request, jsonify
+efrom flask import Flask, render_template, json, request, jsonify, redirect, url_for
 from GolfSetup import GolfSetup
 from GolfSetup import Config
 from GolfSetup import Players
@@ -24,27 +24,30 @@ def players():
 
 @app.route("/editplayer",methods=['GET','POST'])
 def editplayers():
-    #player_index = int(request.form['playerindex'])
     return render_template('editplayer.html')
 
 @app.route("/deleteplayer",methods=['GET','POST'])
 def deleteplayers():
     pid = request.args['pid']
-    print 'Deleting pid: %d' % int(pid)
     if pid:
         Players.deletePlayer('./data/Players.json',int(pid))
-    return render_template('players.html', players=(Players.getPlayers('./data/Players.json')['Players']))
+    return redirect(url_for('players'))
 
 @app.route("/saveplayer",methods=['POST'])
 def saveplayers():
-    name = request.form['newname']
-    hc = float(request.form['newhandicap'])
-    if name and hc:
-        #save values
-        pass
-        return jsonify(saved=True)
-    else:
-        return jsonify(saved=False)
+
+    if request.method == 'POST':
+        name = request.form['newname']
+        hc = int(request.form['newhandicap'])
+        dec = int(request.form['newhandicapdec'])
+        print "%s %d %d" % (name,hc,dec)
+        if name and hc and dec:
+            hc = (hc*100 + dec)/100.0
+            Players.addPlayer('./data/Players.json', name, hc)
+            return redirect(url_for('players'))
+
+    return redirect(url_for('editplayer'))
+
 
 if __name__ == "__main__":
     app.run()
