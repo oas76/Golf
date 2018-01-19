@@ -1,6 +1,5 @@
 function loadXMLDoc()
 {
-    console.log('Starting script');
     var req = new XMLHttpRequest();
     req.onreadystatechange = function()
     {
@@ -13,9 +12,12 @@ function loadXMLDoc()
             else
             {
                 var response = JSON.parse(req.responseText);
-                var temp = '<ul class="list-group"> {{#pairings}} <li class="list-group-item">{{players}} <span class="badge"> {{hc}} </span> </li> {{/pairings}} </ul>';
-                html = Mustache.to_html(temp, response.tournament);
-                document.getElementById('myDiv').innerHTML = html;
+                if(response.tournament)
+                {
+                    var temp = '<ul class="list-group"> {{#pairings}} <li class="list-group-item">{{players}} <span class="badge"> {{hc}} </span> </li> {{/pairings}} </ul>';
+                    html = Mustache.to_html(temp, response.tournament);
+                    document.getElementById('myDiv').innerHTML = html;
+                }
             }
         }
     }

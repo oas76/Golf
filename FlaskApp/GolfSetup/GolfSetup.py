@@ -4,6 +4,7 @@ import random as ran
 import numpy as np
 import functools as func
 import itertools as itertools
+import Players as P
 import Config as C
 
 def _cleanTeamCobinations(list):
@@ -33,10 +34,10 @@ def _randomTeamCombination(iterable,nrPlayers,size):
 
     return tuple(pool[i] for i in indices)
 
-def _getHandicapForPlayers(players):
+def _getHandicapForPlayers(players,player_list):
     hc = []
     for p in players:
-        hc += map(lambda x : x['hc'], filter(lambda x: x['Name'] == p, C.players))
+        hc += map(lambda x : x['hc'], filter(lambda x: x['Name'] == p, player_list))
     return _calcTeamHc(hc)
 
 def _calcTeamHc(hclist):
@@ -58,7 +59,7 @@ def _calcTeamHc(hclist):
 def createPairing(size=C.teamsize):
 
     # Define player details, Name and handicap
-    player_list  = C.players
+    player_list  = P.getPlayers('./data/Players.json')['Players']
 
     # Get player names only
     player_names = [ entry['Name'] for entry in player_list ]
@@ -71,13 +72,13 @@ def createPairing(size=C.teamsize):
     t_list = list(teams_list)
 
     # Find non overlapping set of teams
-    possible_pairings = _randomTeamCombination(t_list,len(C.players),size)
+    possible_pairings = _randomTeamCombination(t_list,len(player_list),size)
 
     result = []
     for pairing in possible_pairings:
         entry = {}
         entry['players'] = pairing
-        entry['hc'] =  _getHandicapForPlayers(pairing)
+        entry['hc'] =  _getHandicapForPlayers(pairing,player_list)
         result.append(entry)
 
     return {'pairings': result}
