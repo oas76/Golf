@@ -9,3 +9,4 @@ GolfSetup/RoundSetup.txt
 .idea/*
 *.pyc
 *.egg-info/*
+.DS_Store
