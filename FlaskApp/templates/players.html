@@ -35,16 +35,19 @@
             <tr>
               <td>{{p.Name}}</td>
               <td>{{p.hc}}</td>
-              <td width="10" allign="right"><a href="#" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></td>
-              <td width="10" allign="right"><a href="/deleteplayer?pid={{p.pid}}" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
+              <td width="10" allign="right"><a href="{{ url_for('editplayer', pid=p.pid ) }}" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></td>
+              <td width="10" allign="right"><a href="{{ url_for('deleteplayer', pid=p.pid ) }}" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
             </tr>
             {% endfor %}
           </tbody>
         </table>
 
         <p>
-          <a href="./editplayer" class="btn btn-info btn-lg">
+          <a href="{{ url_for('editplayer', pid=0) }} " class="btn btn-info btn-lg" methods="GET">
             <span class="glyphicon glyphicon-plus"></span> Add Player
+          </a>
+          <a href="{{ url_for('main') }} " class="btn btn-info btn-lg" methods="GET">
+            <span class="glyphicon glyphicon-triangle-left"></span> Back
           </a>
         </p>
       </div>

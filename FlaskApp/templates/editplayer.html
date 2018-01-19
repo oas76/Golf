@@ -4,10 +4,9 @@
     <title>Raymon Randomizer</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="../static/setup.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-    <link href="../static/setup.css" rel="stylesheet">
 
   </head>
 
@@ -21,21 +20,23 @@
 
       <div class="jumbotron">
         <h2 align="center">Add Player</h2>
-        <form class="form-signin" id="editplayer" method="POST">
+        <form class="form-signin" id="editplayer" method="post" role="form">
           <p align="center">
-            <label for="newname" class="sr-only">newname</label>
-            <input align="center" type="text" size="10" maxlength="10" placeholder="Name" id="newname" name="newname"/> <br>
-            <label for="newhandicap" class="sr-only">newhandicap</label>
-            <input align="center" type="text" size="2" maxlength="2" placeholder="hc" id="newhandicap" name="newhandicap"/>,
-            <label for="newhandicapdec" class="sr-only">newhandicapdec</label>
-            <input align="center" type="text" maxlength="1" size="1" placeholder="0" id="newhandicapdec" name="newhandicapdec"/>
+            {{ form.playername(placeholder="Name", size="10", maxlength="10", value=player['Name']) }}
+            <br>
+            {{ form.handicap(placeholder="36", size="2",maxlength="2", pattern="[0-5][0-9]", value=player['hc']) }} <strong>,</strong>
+            {{ form.handicapdec(placeholder="0", size="1", pattern="[0-9]", maxlength="1", value=player['hcdec']) }}
+            {{ form.csrf_token }}
           </p>
           <p align="center">
-            <a id="btnSave" href="/saveplayer"  class="btn btn-info btn-lg">
+            <button id="btnSave" href="{{ url_for('editplayer', pid=0) }}"  class="btn btn-info btn-lg" methods="post" >
               <span class="glyphicon glyphicon-save"></span> Save
-            </a>
+            </button>
          </p>
         </form>
+          <a href="{{ url_for('players') }} " class="btn btn-info btn-lg" methods="GET">
+            <span class="glyphicon glyphicon-triangle-left"></span> Back
+          </a>
       </div>
 
       <footer class="footer">
