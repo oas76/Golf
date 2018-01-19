@@ -7,6 +7,15 @@ def getPlayers(file):
     with open(file,'r') as jsonFile:
         return json.load(jsonFile)
 
+def getPlayerByIndex(file,pid):
+    with open(file,'r') as jsonFile:
+        old_data = json.load(jsonFile)
+        for p in old_data['Players']:
+            if p['pid'] == pid:
+                return p
+    return None
+
+
 def deletePlayer(file,pid):
     with open(file,'r') as jsonFile:
         old_data = json.load(jsonFile)
