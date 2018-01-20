@@ -10,3 +10,4 @@ GolfSetup/RoundSetup.txt
 *.pyc
 *.egg-info/*
 .DS_Store
+var.env
