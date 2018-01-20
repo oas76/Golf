@@ -14,17 +14,25 @@ def main():
 
 @app.route("/randomize", methods=['POST'])
 def randomize():
-    teamsize = int(request.form['teamsize'])
-    if 0 < teamsize <= len(Players.getPlayers('./data/Players.json')['Players']):
-        res = GolfSetup.createPairing(size=teamsize)
-        return jsonify(tournament = res)
+    try:
+        teamsize = int(request.form['teamsize'])
+        if 0 < teamsize <= len(Players.getPlayers('./data/Players.json')['Players']):
+            res = GolfSetup.createPairing(size=teamsize)
+            return jsonify(tournament = res)
 
-    return jsonify(tournament = None)
+        return jsonify(tournament = None)
+
+    except Exception as e:
+        print(e.message)
 
 
 @app.route("/players",methods=['GET'])
 def players():
-    return render_template('players.html', players=(Players.getPlayers('./data/Players.json')['Players']))
+    try:
+        return render_template('players.html', players=(Players.getPlayers('./data/Players.json')['Players']))
+
+    except Exception as e:
+        print(e.message)
 
 @app.route("/editplayer/<int:pid>",methods=['GET','POST'])
 def editplayer(pid):
