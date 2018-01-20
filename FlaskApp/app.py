@@ -12,7 +12,7 @@ app.secret_key = "super secret key"
 def main():
     return render_template('index.html')
 
-@app.route("/randomize", methods=['POST'])
+@app.route("/randomize/", methods=['POST'])
 def randomize():
     try:
         teamsize = int(request.form['teamsize'])
@@ -26,7 +26,7 @@ def randomize():
         print(e.message)
 
 
-@app.route("/players",methods=['GET'])
+@app.route("/players/",methods=['GET'])
 def players():
     try:
         return render_template('players.html', players=(Players.getPlayers('./data/Players.json')['Players']))
@@ -34,7 +34,7 @@ def players():
     except Exception as e:
         print(e.message)
 
-@app.route("/editplayer/<int:pid>",methods=['GET','POST'])
+@app.route("/editplayer/<int:pid>/",methods=['GET','POST'])
 def editplayer(pid):
     try:
         form = forms.NameHandicapForm()
@@ -63,7 +63,7 @@ def editplayer(pid):
         print e.args
 
 
-@app.route("/deleteplayer/<int:pid>",methods=['GET'])
+@app.route("/deleteplayer/<int:pid>/",methods=['GET'])
 def deleteplayer(pid):
     try:
         delete_pid = pid
