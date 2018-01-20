@@ -66,4 +66,4 @@ def deleteplayer(pid):
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(DEBUG=True)
