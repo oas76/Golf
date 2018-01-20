@@ -6,6 +6,7 @@ import functools as func
 import itertools as itertools
 import Players as P
 import Config as C
+import os
 
 def _cleanTeamCobinations(list):
     res = []
@@ -58,8 +59,10 @@ def _calcTeamHc(hclist):
 
 def createPairing(size=C.teamsize):
 
+    data_path = os.environ['DATA_PATH']
+
     # Define player details, Name and handicap
-    player_list  = P.getPlayers('./data/Players.json')['Players']
+    player_list  = P.getPlayers(data_path)['Players']
 
     # Get player names only
     player_names = [ entry['Name'] for entry in player_list ]
