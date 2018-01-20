@@ -4,6 +4,7 @@ from GolfSetup import GolfSetup
 from GolfSetup import Config
 from GolfSetup import Players
 from forms import forms
+import traceback
 
 app = Flask(__name__)
 app.secret_key = "super secret key"
@@ -22,8 +23,8 @@ def randomize():
 
         return jsonify(tournament = None)
 
-    except Exception as e:
-        print(e.message)
+    except Exception, err:
+        traceback.print_exc()
 
 
 @app.route("/players",methods=['GET'])
@@ -31,8 +32,8 @@ def players():
     try:
         return render_template('players.html', players=(Players.getPlayers('./data/Players.json')['Players']))
 
-    except Exception as e:
-        print(e.message)
+    except Exception, err:
+        traceback.print_exc()
 
 @app.route("/editplayer/<int:pid>",methods=['GET','POST'])
 def editplayer(pid):
@@ -58,9 +59,8 @@ def editplayer(pid):
                 vals['hc'] = int(Player['hc'])
                 vals['hcdec'] = int(float(Player['hc'])*10)%10
         return render_template('editplayer.html', form=form, player=vals)
-    except Exception as e:
-        print e.message
-        print e.args
+    except Exception, err:
+        traceback.print_exc()
 
 
 @app.route("/deleteplayer/<int:pid>",methods=['GET'])
@@ -69,8 +69,8 @@ def deleteplayer(pid):
         delete_pid = pid
         Players.deletePlayer('./data/Players.json', delete_pid)
         return redirect(url_for('players'))
-    except Exception as e:
-        print(e.message)
+    except Exception, err:
+        traceback.print_exc()
 
 
 if __name__ == "__main__":
