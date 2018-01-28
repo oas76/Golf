@@ -18,6 +18,12 @@ function loadXMLDoc()
                     html = Mustache.to_html(temp, response.tournament);
                     document.getElementById('myDiv').innerHTML = html;
                 }
+                else
+                {
+                    document.getElementById('myDiv').innerHTML = "Invalid Teamsize"
+                }
+
+
             }
         }
     }

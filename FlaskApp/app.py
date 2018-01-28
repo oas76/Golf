@@ -5,14 +5,15 @@ from GolfSetup import Config
 from GolfSetup import Players
 from forms import forms
 import traceback
-import os.path
+import pymongo
+import os
 
-app = Flask(__name__)
-app.secret_key = "super secret key"
-this_path = os.path.abspath(os.path.dirname(__file__))
-data_path = os.path.join(this_path, "/data/Players.json")
-os.environ['DATA_PATH'] = data_path
 
+app=Flask(__name__)
+app.config.update(dict(
+    SECRET_KEY="H0le1n0ne",
+    WTF_CSRF_SECRET_KEY="H0le1n0ne"
+))
 
 @app.route("/",methods=['GET'])
 def main():
@@ -22,7 +23,7 @@ def main():
 def randomize():
     try:
         teamsize = int(request.form['teamsize'])
-        if 0 < teamsize <= len(Players.getPlayers(data_path)['Players']):
+        if 0 < teamsize <= len(Players.getPlayers()):
             res = GolfSetup.createPairing(size=teamsize)
             return jsonify(tournament = res)
 
@@ -35,13 +36,22 @@ def randomize():
 @app.route("/players",methods=['GET'])
 def players():
     try:
-        return render_template('players.html', players=(Players.getPlayers(data_path)['Players']))
+        players = Players.getPlayers()
+        if len(players):
+            return render_template('players.html', players=players)
+        else:
+            return render_template('players.html', players={})
 
     except Exception, err:
         traceback.print_exc()
 
-@app.route("/editplayer/<int:pid>",methods=['GET','POST'])
-def editplayer(pid):
+#@app.route("/players",methods=['GET'])
+#def addPlayer():
+#    try:
+
+
+@app.route("/player/<uuid>",methods=['GET','POST'])
+def updateplayer(uuid):
     try:
         form = forms.NameHandicapForm()
         vals = None
@@ -51,13 +61,13 @@ def editplayer(pid):
             attempt_hcdec = request.form['handicapdec']
             if attempt_hc and attempt_hcdec and attempt_name:
                 newhc = (int(attempt_hc)*10 + int(attempt_hcdec))/float(10)
-                if pid:
-                    Players.editPlayer(data_path,pid,attempt_name,newhc)
+                if not uuid == '0' :
+                    Players.updatePlayer(uuid,attempt_name,newhc)
                 else:
-                    Players.addPlayer(data_path,attempt_name,newhc)
+                    Players.addPlayer(attempt_name,newhc)
                 return redirect(url_for('players'))
-        elif request.method=='GET' and pid:
-            Player = Players.getPlayerByIndex(data_path,pid)
+        elif request.method=='GET' and uuid:
+            Player = Players.getPlayerByIndex(uuid)
             if Player:
                 vals = {}
                 vals['Name'] = Player['Name']
@@ -68,11 +78,11 @@ def editplayer(pid):
         traceback.print_exc()
 
 
-@app.route("/deleteplayer/<int:pid>",methods=['GET'])
-def deleteplayer(pid):
+@app.route("/deleteplayer/<uuid>",methods=['GET'])
+def deleteplayer(uuid):
     try:
-        delete_pid = pid
-        Players.deletePlayer(data_path, delete_pid)
+        delete_uuid = uuid
+        Players.deletePlayer(delete_uuid)
         return redirect(url_for('players'))
     except Exception, err:
         traceback.print_exc()
